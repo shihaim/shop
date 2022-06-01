@@ -1,16 +1,13 @@
 쇼핑몰 프로젝트(개발 중)
 ===
-***
 개발환경
 ---
-***
 * IntelliJ
 * Postman
 * GitHub
 
 사용기술
 ---
-***
 ### 프론트엔드
 * Thymeleaf
 * html, css, js
