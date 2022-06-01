@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="div-header" th:fragment="divHeader">
+    <div>
+        <h1>로고 이미지</h1>
+    </div>
+    <div>
+        <input type="text" placeholder="상품 검색">
+    </div>
+    <div>
+        <a th:href="@{/signIn}">로그인</a>
+        <a th:href="@{/signUp}">회원가입</a>
+    </div>
+</div>
