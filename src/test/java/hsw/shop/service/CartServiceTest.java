@@ -16,7 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -37,16 +39,11 @@ class CartServiceTest {
     @Autowired
     CartRepository cartRepository;
 
-    @Autowired
-    EntityManager em;
-
-    MockMultipartFile mock;
-
     @Test
-    public void 장바구니_상품담기() {
+    public void 장바구니_상품담기() throws IOException {
         //given
         Member member = createMember("test1", "1234", "테스트", "010-1234-5678", "test@naver.com", "11111", "서울시", "어딘가");
-        ProductImage productImage = createProductImage("JPA.jpg", "abc-abc-123-123");
+        MockMultipartFile productImage = new MockMultipartFile("상품 이미지", "you.png", "image/png", new FileInputStream("C:/Temp/hswshop/product_image/b6fbfd7d-db83-4c74-8661-175f2f03ce9b.png"));
         Product product = createProduct(productImage, "JPA", 15000, 10, "김영한님의 JPA 저서, JPA를 배우는 모든 이에게 추천!");
 
         memberRepository.save(member);
@@ -66,10 +63,10 @@ class CartServiceTest {
     }
 
     @Test
-    public void 장바구니_상품취소() {
+    public void 장바구니_상품취소() throws IOException {
         //given
         Member member = createMember("test1", "1234", "테스트", "010-1234-5678", "test@naver.com", "11111", "서울시", "어딘가");
-        ProductImage productImage = createProductImage("JPA.jpg", "abc-abc-123-123");
+        MockMultipartFile productImage = new MockMultipartFile("상품 이미지", "you.png", "image/png", new FileInputStream("C:/Temp/hswshop/product_image/b6fbfd7d-db83-4c74-8661-175f2f03ce9b.png"));
         Product product = createProduct(productImage, "JPA", 15000, 10, "김영한님의 JPA 저서, JPA를 배우는 모든 이에게 추천!");
 
         memberRepository.save(member);
@@ -88,10 +85,10 @@ class CartServiceTest {
     }
 
     @Test
-    public void 장바구니_여러개_담기() {
+    public void 장바구니_여러개_담기() throws IOException {
         //given
         Member member = createMember("test1", "1234", "테스트", "010-1234-5678", "test@naver.com", "11111", "서울시", "어딘가");
-        ProductImage productImage = createProductImage("JPA.jpg", "abc-abc-123-123");
+        MockMultipartFile productImage = new MockMultipartFile("상품 이미지", "you.png", "image/png", new FileInputStream("C:/Temp/hswshop/product_image/b6fbfd7d-db83-4c74-8661-175f2f03ce9b.png"));
         Product product = createProduct(productImage, "JPA", 15000, 10, "김영한님의 JPA 저서, JPA를 배우는 모든 이에게 추천!");
 
         memberRepository.save(member);
@@ -117,7 +114,7 @@ class CartServiceTest {
         return new ProductImageCreateDto(originalName, storeName).toEntity();
     }
 
-    private Product createProduct(ProductImage productImage, String name, int price, int stockQuantity, String description) {
+    private Product createProduct(MockMultipartFile productImage, String name, int price, int stockQuantity, String description) {
         return new ProductCreateDto(productImage, name, price, stockQuantity, description).toEntity();
     }
 
