@@ -8,6 +8,7 @@ import javax.persistence.*;
 import static javax.persistence.FetchType.*;
 
 @Entity
+@Table(name = "order_detail")
 @Getter
 public class OrderDetail {
 
@@ -36,6 +37,10 @@ public class OrderDetail {
         this.product = product;
         this.price = price;
         this.count = count;
+    }
+
+    public void addOrder(Order order) {
+        this.order = order;
     }
 
     //생성 메서드

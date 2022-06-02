@@ -5,22 +5,24 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * TODO
- * 상품 생성 검증
- * 1. null값 검증
- */
+import javax.validation.constraints.NotNull;
+
 @Getter
 public class ProductCreateDto {
 
+    @NotNull
     private MultipartFile productImage;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private int price;
 
+    @NotNull
     private int stockQuantity;
 
+    @NotNull
     private String description;
 
     @Builder

@@ -21,6 +21,12 @@ public class ProductRepository {
         return em.find(Product.class, id);
     }
 
+    public String findByName(Long id) {
+        return em.createQuery("select p.name from Product p where p.id = :id", String.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
     public List<Product> findAll() {
         return em.createQuery("select p from Product p", Product.class)
                 .getResultList();

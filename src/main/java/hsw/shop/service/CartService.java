@@ -34,7 +34,7 @@ public class CartService {
         return cart.getId();
     }
 
-    //취소
+    //담기 취소
     public void cancel(Long cartId) {
         Cart cart = cartRepository.findOne(cartId);
         cartRepository.remove(cart);

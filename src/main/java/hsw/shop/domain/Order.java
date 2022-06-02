@@ -6,9 +6,7 @@ import lombok.Getter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -26,6 +24,11 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    /**
+     * 필드 초기화를 했는데도 불구하고 빌더 패턴을 사용하면
+     * 리스트 초기화가 안되서 NullPointerException 발생
+     * 빌더에서 초기화를 한번 더 진행함.
+     */
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
@@ -50,15 +53,41 @@ public class Order {
         this.delivery = delivery;
     }
 
+    /**
+     * 원래 코드
+     * this.orderDetails.add(orderDetail);
+     * orderDetail.builder().order(this);
+     *
+     * 그런데 orderDetail의 order가 자꾸 null 값을 저장하는 바람에 골치가 아팠는데,
+     * 연관관계 메서드 만든 후 해보니 잘 들어감.
+     * 빌더 패턴에 대한 이해가 부족
+     */
+    public void addOrderDetail(OrderDetail orderDetail) {
+        this.orderDetails.add(orderDetail);
+        orderDetail.addOrder(this);
+    }
+
     //생성 메서드
     public static Order createOrder(Member member, Delivery delivery, OrderDetail... orderDetails) {
-        return Order.builder()
-                    .member(member)
-                    .orderDetails(Arrays.stream(orderDetails).collect(Collectors.toList()))
-                    .orderDate(LocalDateTime.now())
-                    .status(OrderStatus.ORDER)
-                    .delivery(delivery)
-                    .build();
+
+        Order order = Order.builder()
+                .member(member)
+                .orderDetails(new ArrayList<>())
+                .orderDate(LocalDateTime.now())
+                .status(OrderStatus.ORDER)
+                .delivery(delivery)
+                .build();
+
+        for (OrderDetail orderDetail : orderDetails) {
+            order.addOrderDetail(orderDetail);
+        }
+
+        List<OrderDetail> od = order.getOrderDetails();
+        for (OrderDetail orderDetail : od) {
+            System.out.println("orderDetail = " + orderDetail);
+        }
+
+        return order;
     }
 
     //주문 취소

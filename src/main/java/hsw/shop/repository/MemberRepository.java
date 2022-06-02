@@ -22,6 +22,12 @@ public class MemberRepository {
         return em.find(Member.class, id);
     }
 
+    public String findByName(Long id) {
+        return em.createQuery("select m.name from Member m where m.memberId = :id", String.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
     public Optional<Member> findByLoginId(String loginId) {
         return findAll().stream()
                 .filter(m -> m.getId().equals(loginId))
