@@ -83,7 +83,7 @@ public class Order {
         return order;
     }
 
-    //오버로딩(List를 통해서 받는 방법말고는 생각이 안나서 가변인자로 받으려니 해결이 힘들어서 오버로딩)
+    //List를 통해서 받는 방법말고는 생각이 안나서 가변인자로 받으려니 해결이 힘들어서 오버로딩 이용
     public static Order createOrder(Member member, Delivery delivery, List<OrderDetail> orderDetails) {
 
         Order order = Order.builder()
