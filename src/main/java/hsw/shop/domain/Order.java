@@ -68,7 +68,23 @@ public class Order {
     }
 
     //생성 메서드
-    public static Order createOrder(Member member, Delivery delivery, OrderDetail... orderDetails) {
+    public static Order createOrder(Member member, Delivery delivery, OrderDetail orderDetail) {
+
+        Order order = Order.builder()
+                .member(member)
+                .orderDetails(new ArrayList<>())
+                .orderDate(LocalDateTime.now())
+                .status(OrderStatus.ORDER)
+                .delivery(delivery)
+                .build();
+
+        order.addOrderDetail(orderDetail);
+
+        return order;
+    }
+
+    //오버로딩(List를 통해서 받는 방법말고는 생각이 안나서 가변인자로 받으려니 해결이 힘들어서 오버로딩)
+    public static Order createOrder(Member member, Delivery delivery, List<OrderDetail> orderDetails) {
 
         Order order = Order.builder()
                 .member(member)
@@ -80,11 +96,6 @@ public class Order {
 
         for (OrderDetail orderDetail : orderDetails) {
             order.addOrderDetail(orderDetail);
-        }
-
-        List<OrderDetail> od = order.getOrderDetails();
-        for (OrderDetail orderDetail : od) {
-            System.out.println("orderDetail = " + orderDetail);
         }
 
         return order;
