@@ -4,9 +4,7 @@ import hsw.shop.web.dto.MemberUpdateDto;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -32,11 +30,14 @@ public class Member {
 
     private String address2;
 
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
+
     protected Member() {
     }
 
     @Builder
-    public Member(String id, String password, String name, String phone, String email, String zipcode, String address1, String address2) {
+    public Member(String id, String password, String name, String phone, String email, String zipcode, String address1, String address2, MemberRole role) {
         this.id = id;
         this.password = password;
         this.name = name;
@@ -45,7 +46,9 @@ public class Member {
         this.zipcode = zipcode;
         this.address1 = address1;
         this.address2 = address2;
+        this.role = role;
     }
+
 
     //로그인 로직
     public void signIn() {

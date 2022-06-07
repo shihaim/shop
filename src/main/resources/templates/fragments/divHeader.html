@@ -7,8 +7,13 @@
     <div>
         <input type="text" placeholder="상품 검색">
     </div>
-    <div>
-        <a th:href="@{/signIn}">로그인</a>
-        <a th:href="@{/signUp}">회원가입</a>
+    <div th:if="${loginMember == null}">
+        <a th:href="@{/sign-in}">로그인</a>
+        <a th:href="@{/sign-up}">회원가입</a>
+    </div>
+    <div th:unless="${loginMember == null}">
+        <p th:text="|환영합니다. ${loginMember.name}님!|"></p>
+        <a th:href="@{/my-page}">마이페이지</a>
+        <a th:href="@{/logout}">로그아웃</a>
     </div>
 </div>

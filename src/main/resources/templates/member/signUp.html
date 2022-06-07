@@ -1,36 +1,48 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/header :: header">
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <div class="div-body">
-        <form action="/signUp" th:object="${signUpForm}" method="post">
+        <form th:object="${signUpForm}" method="post">
             <div>
                 <label th:for="id">아이디</label>
                 <input type="text" th:field="*{id}" placeholder="아이디를 입력하세요">
+                <div class="field-error" th:errors="*{id}">아이디 오류</div>
             </div>
             <div>
                 <label th:for="password">비밀번호</label>
                 <input type="password" th:field="*{password}" placeholder="비밀번호를 입력하세요">
+                <div class="field-error" th:errors="*{password}">비밀번호 오류</div>
             </div>
             <div>
                 <label th:for="password">비밀번호 확인</label>
                 <input type="password" name="password_check" placeholder="비밀번호를 입력하세요">
+                <!-- 비밀번호와 맞지 않는 글로벌 오류 -->
             </div>
             <div>
                 <label th:for="name">이름</label>
                 <input type="text" th:field="*{name}" placeholder="이름을 입력하세요">
+                <div class="field-error" th:errors="*{name}">이름 오류</div>
             </div>
             <div>
                 <label th:for="phone">전화번호</label>
                 <input type="text" th:field="*{phone}" placeholder="전화번호를 입력하세요">
+                <div class="field-error" th:errors="*{phone}">전화번호 오류</div>
             </div>
             <div>
                 <label th:for="email">이메일</label>
                 <input type="email" th:field="*{email}" placeholder="이메일을 입력하세요">
+                <div class="field-error" th:errors="*{email}">이메일 오류</div>
             </div>
             <div>
                 <label th:for="address">주소</label>
@@ -38,12 +50,16 @@
                     <input type="text" th:field="*{zipcode}" placeholder="우편번호" readonly>
                     <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
                     <input type="text" th:field="*{address1}" placeholder="주소" readonly><br>
-                    <input type="text" th:field="*{address2}" placeholder="상세주소">
+                    <span class="field-error" th:errors="*{zipcode}">우편번호 오류</span>
+                    <input type="text" th:field="*{address2}" placeholder="상세주소" style="display: block;">
+                    <div class="field-error" th:errors="*{address2}">상세주소 오류</div>
                 </div>
             </div>
             <button type="submit">회원가입</button>
+            <button type="button" th:onclick="|location.href='@{/}'|">취소</button>
         </form>
     </div>
+    <div th:replace="fragments/footer :: footer" />
 </div>
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
