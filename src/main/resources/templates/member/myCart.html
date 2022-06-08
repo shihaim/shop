@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/divHeader :: divHeader" />
+    <div class="row">
+        <div th:each="cart : ${carts}" class="col">
+            <div class="col"><input type="checkbox" th:value="${cart.id}"></div>
+            <div class="col">
+                <img th:src="|/images/${cart.product.productImage['storeImageName']}|" width="50" height="50">
+                <p th:text="${cart.product['name']}">상품이름</p>
+                <p th:text="${cart.count}"></p>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/footer :: footer" />
+</div>
+</body>
+</html>

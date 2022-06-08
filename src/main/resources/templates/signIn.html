@@ -6,8 +6,9 @@
 </head>
 <body>
 <div class="container">
-    <div class="div-body">
-        <form action="/sign-in" method="post" th:object="${signInForm}">
+    <div th:replace="fragments/divHeader :: divHeader" />
+    <div class="row">
+        <form action="/member/sign-in" method="post" th:object="${signInForm}">
             <div>
                 <label th:for="id">아이디</label>
                 <input type="text" th:name="id" placeholder="아이디를 입력하세요">
@@ -22,9 +23,10 @@
                 <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
             </div>
             <button type="submit">로그인</button>
-            <button type="button" th:onclick="'location.href=\'' + @{/sign-up} + '\''">회원가입</button>
+            <button type="button" th:onclick="|location.href='@{/member/sign-up}'|">회원가입</button>
         </form>
     </div>
+    <div th:replace="fragments/footer :: footer" />
 </div>
 </body>
 </html>

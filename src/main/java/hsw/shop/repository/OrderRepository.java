@@ -21,6 +21,14 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
+    public List<Order> findAllByMemberId(Long memberId) {
+        return em.createQuery(
+                        "select o from Order o" +
+                                " join o.member m" +
+                                " on o.member.memberId = m.memberId", Order.class)
+                .getResultList();
+    }
+
     //주문 조회
 //    public List<Order> findAll(OrderSearch orderSearch) {}
 }

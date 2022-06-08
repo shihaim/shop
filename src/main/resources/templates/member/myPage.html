@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/divHeader :: divHeader" />
+    <div class="row">
+        <a th:href="@{/member/{memberId}/my-info(memberId=${loginMember.memberId})}">내 정보 수정</a>
+        <a th:href="@{/member/{memberId}/cart(memberId=${loginMember.memberId})}">장바구니</a>
+    </div>
+    <div class="row">
+        <!-- 주문 내역 확인 -->
+        <div th:each="order : ${orders}" class="col">
+            <p th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm:ss')}">yyyy-MM-dd HH:mm:ss</p>
+            <p th:text="${order.status}">주문상태</p>
+            <!-- 1 + N 문제, 패치 조인 사용해야함 -->
+            <p th:text="${order.delivery['deliveryStatus']}">배송상태</p>
+        </div>
+    </div>
+    <div th:replace="fragments/footer :: footer" />
+</div>
+</body>
+</html>

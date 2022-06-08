@@ -7,7 +7,16 @@
 <body>
     <div class="container">
         <div th:replace="fragments/divHeader :: divHeader" />
-        <div class="div-body"></div>
+        <div class="row">
+            <!-- 상품 리스트 -->
+            <div th:each="product : ${products}" class="col">
+                <p th:text="${product.name}">상품이름</p>
+                <p th:text="${product.price}">상품가격</p>
+                <p th:text="${product.description}">상품설명</p>
+                <!-- 1 + N 문제, 패치 조인으로 쿼리수 줄이기 -->
+                <img th:src="|/images/${product.productImage['storeImageName']}|" width="50" height="50">
+            </div>
+        </div>
         <div th:replace="fragments/footer :: footer" />
     </div>
 </body>

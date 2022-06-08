@@ -2,12 +2,14 @@ package hsw.shop.web.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Getter
+@Setter
 public class MemberUpdateDto {
 
     private final String PHONE_REGEXP = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$";
@@ -19,6 +21,7 @@ public class MemberUpdateDto {
     @Pattern(regexp = PHONE_REGEXP, message = "10 ~ 11 자리의 숫자만 입력 가능합니다.")
     private String phone;
 
+    @NotEmpty
     @Email
     private String email;
 
@@ -37,6 +40,8 @@ public class MemberUpdateDto {
      */
     public MemberUpdateDto() {
     }
+
+
 
     @Builder
     public MemberUpdateDto(String name, String phone, String email, String zipcode, String address1, String address2) {
