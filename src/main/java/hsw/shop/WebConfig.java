@@ -1,6 +1,7 @@
 package hsw.shop;
 
 import hsw.shop.web.argumentresolver.LoginMemberArgumentResolver;
+import hsw.shop.web.interceptor.AdminCheckInterceptor;
 import hsw.shop.web.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -17,12 +18,22 @@ public class WebConfig implements WebMvcConfigurer {
         resolvers.add(new LoginMemberArgumentResolver());
     }
 
-    /*@Override
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        //로그인을 하지 않을 경우 해당 경로만 이동 가능
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/sign-up", "/sign-in", "/logout", "/css/**", "/*.ico", "/error");
+                .excludePathPatterns(
+                        "/api/v1/**",
+                        "/",
+                        "/member/sign-up", "/member/sign-in", "/member/logout",
+                        "/products/*",
+                        "/images/**", "/css/**", "/*.ico", "/error");
+
         //ADMIN일 경우 상품 등록 가능
-    }*/
+        registry.addInterceptor(new AdminCheckInterceptor())
+                .order(2)
+                .addPathPatterns("/product/**");
+    }
 }
