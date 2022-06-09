@@ -9,12 +9,16 @@
         <div th:replace="fragments/divHeader :: divHeader" />
         <div class="row">
             <!-- 상품 리스트 -->
-            <div th:each="product : ${products}" class="col">
-                <p th:text="${product.name}">상품이름</p>
-                <p th:text="${product.price}">상품가격</p>
-                <p th:text="${product.description}">상품설명</p>
-                <!-- 1 + N 문제, 패치 조인으로 쿼리수 줄이기 -->
-                <img th:src="|/images/${product.productImage['storeImageName']}|" width="50" height="50">
+            <div th:each="product : ${products}" class="col" style="border: 2px black solid;">
+                <a th:href="@{products/{productId}(productId=${product.id})}">
+                    <div class="col">
+                        <!-- 1 + N 문제, 패치 조인 사용해야함 -->
+                        <img th:src="|/images/${product.productImage['storeImageName']}|" width="100" height="100">
+                    </div>
+                    <p th:text="${product.name}" class="col">상품이름</p>
+                    <p th:text="${product.price}" class="col">상품가격</p>
+                    <p th:text="${product.description}" class="col">상품설명</p>
+                </a>
             </div>
         </div>
         <div th:replace="fragments/footer :: footer" />

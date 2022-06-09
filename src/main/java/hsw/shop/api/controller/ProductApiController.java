@@ -29,8 +29,6 @@ public class ProductApiController {
     @PostMapping("/save")
     public ResponseEntity save(@Valid @ModelAttribute ProductCreateDto productCreateDto) throws IOException {
 
-        log.info("productCreateDto={}", productCreateDto);
-
         Long saveProduct = productService.saveProduct(productCreateDto);
         Product findProduct = productService.findProduct(saveProduct);
 

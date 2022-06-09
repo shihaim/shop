@@ -17,7 +17,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -115,7 +114,7 @@ class CartServiceTest {
     }
 
     private Product createProduct(MockMultipartFile productImage, String name, int price, int stockQuantity, String description) {
-        return new ProductCreateDto(productImage, name, price, stockQuantity, description).toEntity();
+        return new ProductCreateDto(name, price, stockQuantity, description, productImage).toEntity();
     }
 
 }

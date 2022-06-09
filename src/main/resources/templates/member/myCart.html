@@ -11,6 +11,7 @@
         <div th:each="cart : ${carts}" class="col">
             <div class="col"><input type="checkbox" th:value="${cart.id}"></div>
             <div class="col">
+                <!-- 1 + N 문제, 패치 조인 사용해야함 -->
                 <img th:src="|/images/${cart.product.productImage['storeImageName']}|" width="50" height="50">
                 <p th:text="${cart.product['name']}">상품이름</p>
                 <p th:text="${cart.count}"></p>

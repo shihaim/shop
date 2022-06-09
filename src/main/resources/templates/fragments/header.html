@@ -5,32 +5,49 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
     <!-- Field Error CSS -->
     <style>
         .field-error {
             border-color: #dc3545;
             color: #dc3545;
         }
-    </style>
 
-    <!-- jquery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    </style>
 
     <!-- js -->
     <script>
         function goPost() {
             var logoutForm = $('<form></form>');
             logoutForm.attr("method", "post");
-            logoutForm.attr("action","/logout");
+            logoutForm.attr("action","/member/logout");
 
             logoutForm.appendTo("body");
 
             logoutForm.submit();
         }
+
+        function put() {
+            console.log('click put!');
+        }
     </script>
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-
     <title>HSW SHOP</title>
+<!--    var cartForm = $('<form></form>');-->
+<!--    cartForm.attr("method", "post");-->
+<!--    cartForm.attr("action", "/cart");-->
+<!--    cartForm.appendChild($('#id'));-->
+<!--    cartForm.appendChild($('#count'));-->
+
+<!--    cartForm.appendTo("body");-->
+
+<!--    cartForm.submit();-->
 </head>
+</html>

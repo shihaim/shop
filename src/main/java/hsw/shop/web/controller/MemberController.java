@@ -2,6 +2,7 @@ package hsw.shop.web.controller;
 
 import hsw.shop.domain.Cart;
 import hsw.shop.domain.Member;
+import hsw.shop.domain.MemberRole;
 import hsw.shop.repository.CartRepository;
 import hsw.shop.service.MemberService;
 import hsw.shop.web.Login;
@@ -63,6 +64,11 @@ public class MemberController {
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
+        if (loginMember.getRole().equals(MemberRole.ADMIN)) {
+            log.info("login admin");
+            return "redirect:/product";
+        }
+
         return "redirect:/";
     }
 
@@ -83,8 +89,8 @@ public class MemberController {
      */
     @GetMapping("/{memberId}/my-info")
     public String myInfoUpdatePage(@Login Member loginMember, Model model) {
-        model.addAttribute("loginMember", loginMember);
         model.addAttribute("myInfoForm", loginMember);
+        model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
         return "member/myInfoUpdate";
     }
@@ -95,8 +101,9 @@ public class MemberController {
                                BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
-            model.addAttribute("loginMember", loginMember);
             model.addAttribute("myInfoForm", updateDto);
+            model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+
             return "member/myInfoUpdate";
         }
 
@@ -108,9 +115,10 @@ public class MemberController {
     }
 
     @GetMapping("/{memberId}/cart")
-    public String cart(@Login Member loginMember, Model model) {
+    public String myCartPage(@Login Member loginMember, Model model) {
         List<Cart> carts = cartRepository.findAllByMemberId(loginMember.getMemberId());
         model.addAttribute("carts", carts);
+        model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
         return "member/myCart";
     }

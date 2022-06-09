@@ -37,7 +37,7 @@ public class MemberCreateDto {
     @Pattern(regexp = PHONE_REGEXP, message = "10 ~ 11 자리의 숫자만 입력 가능합니다.")
     private String phone;
 
-    @NotEmpty
+    @NotEmpty(message = "이메일을 입력해주세요.")
     @Email
     private String email;
 
@@ -46,7 +46,7 @@ public class MemberCreateDto {
 
     private String address1;
 
-    @NotEmpty(message = "주소를 입력해주세요.")
+    @NotEmpty(message = "상세 주소를 입력해주세요.")
     private String address2;
 
     /**

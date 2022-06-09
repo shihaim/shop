@@ -7,6 +7,7 @@ import hsw.shop.repository.OrderRepository;
 import hsw.shop.repository.ProductRepository;
 import hsw.shop.service.ImageStore;
 import hsw.shop.web.Login;
+import hsw.shop.web.SessionConst;
 import hsw.shop.web.dto.MemberCreateDto;
 import hsw.shop.web.dto.MemberSignInDto;
 import lombok.RequiredArgsConstructor;
@@ -38,12 +39,7 @@ public class HomeController {
 
         List<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
-
-        if (loginMember == null) {
-            return "home";
-        }
-
-        model.addAttribute("loginMember", loginMember);
+        model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
         return "home";
     }
@@ -70,10 +66,11 @@ public class HomeController {
     @GetMapping("/member/{memberId}/my-page")
     public String myPage(@Login Member loginMember, Model model) {
         log.info("loginMember={}", loginMember);
-        model.addAttribute("loginMember", loginMember);
         //주문 내역 보여주기
         List<Order> orders = orderRepository.findAllByMemberId(loginMember.getMemberId());
         model.addAttribute("orders", orders);
+        model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+
         return "member/myPage";
     }
 }

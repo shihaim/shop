@@ -59,7 +59,7 @@ public class CartApiController {
     }
 
     /**
-     * 일단 되기는 하는데, 뭔가 애매함. 계속 생각해봐야 할 듯
+     * 일단 되기는 하는데, 이 방식이 맞는지 뭔가 애매함. 계속 생각해봐야 할 듯
      */
     @PostMapping("/cart-order")
     public ResponseEntity cartOrder(HttpServletRequest request) {

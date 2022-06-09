@@ -113,6 +113,6 @@ class OrderServiceTest {
     }
 
     private Product createProduct(MockMultipartFile productImage, String name, int price, int stockQuantity, String description) {
-        return new ProductCreateDto(productImage, name, price, stockQuantity, description).toEntity();
+        return new ProductCreateDto(name, price, stockQuantity, description, productImage).toEntity();
     }
 }
