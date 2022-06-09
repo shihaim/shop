@@ -1,9 +1,7 @@
 package hsw.shop.web.controller;
 
-import hsw.shop.domain.Cart;
 import hsw.shop.domain.Member;
 import hsw.shop.domain.MemberRole;
-import hsw.shop.repository.CartRepository;
 import hsw.shop.service.MemberService;
 import hsw.shop.web.Login;
 import hsw.shop.web.SessionConst;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -29,7 +26,6 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
-    private final CartRepository cartRepository;
 
     @PostMapping("/sign-up")
     public String signUp(@Valid @ModelAttribute("signUpForm") MemberCreateDto memberCreateDto, BindingResult bindingResult) {
@@ -107,19 +103,8 @@ public class MemberController {
             return "member/myInfoUpdate";
         }
 
-        log.info("success");
-
         memberService.updateMember(loginMember.getMemberId(), updateDto);
 
         return "redirect:/member/" + loginMember.getMemberId() + "/my-page";
-    }
-
-    @GetMapping("/{memberId}/cart")
-    public String myCartPage(@Login Member loginMember, Model model) {
-        List<Cart> carts = cartRepository.findAllByMemberId(loginMember.getMemberId());
-        model.addAttribute("carts", carts);
-        model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-
-        return "member/myCart";
     }
 }

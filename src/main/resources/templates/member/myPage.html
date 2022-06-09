@@ -13,12 +13,14 @@
     </div>
     <div class="row">
         <!-- 주문 내역 확인 -->
-        <div th:each="order : ${orders}" class="col">
+        <form action="/cancel" method="post" th:each="order : ${orders}" class="col" style="border: 2px black solid;">
+            <input type="hidden" th:value="${order.id}">
             <p th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm:ss')}">yyyy-MM-dd HH:mm:ss</p>
-            <p th:text="${order.status}">주문상태</p>
             <!-- 1 + N 문제, 패치 조인 사용해야함 -->
             <p th:text="${order.delivery['deliveryStatus']}">배송상태</p>
-        </div>
+            <p th:text="${order.status}">주문상태</p>
+            <button th:if="${#strings.equals(order.status, 'ORDER')}" type="submit">주문 취소</button>
+        </form>
     </div>
     <div th:replace="fragments/footer :: footer" />
 </div>

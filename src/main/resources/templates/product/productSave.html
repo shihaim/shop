@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <form action="/product/save" th:object="${productSaveForm}" method="post" enctype="multipart/form-data">
+            <div>
+                <label th:for="name">상품 이름</label>
+                <input type="text" th:field="*{name}" placeholder="상품 이름을 입력하세요">
+                <div class="field-error" th:errors="*{name}">상품 이름 오류</div>
+            </div>
+            <div>
+                <label th:for="price">상품 가격</label>
+                <input type="number" th:field="*{price}" placeholder="상품 가격을 입력하세요">
+                <div class="field-error" th:errors="*{price}">상품 가격 오류</div>
+            </div>
+            <div>
+                <label th:for="stockQuantity">상품 재고 수량</label>
+                <input type="number" th:field="*{stockQuantity}" placeholder="상품 재고 수량을 입력하세요">
+                <div class="field-error" th:errors="*{stockQuantity}">상품 재고 수량 오류</div>
+            </div>
+            <div>
+                <label th:for="description">상품 설명</label>
+                <textarea th:field="*{description}" placeholder="상품 설명을 입력하세요" rows="20" cols="50" class="row"></textarea>
+                <div class="field-error" th:errors="*{description}">상품 설명 오류</div>
+            </div>
+            <div>
+                <label th:for="productImage">상품 사진</label>
+                <input type="file" accept="image/png, image/jpeg" th:field="*{productImage}" placeholder="상품 사진을 입력하세요">
+                <div th:if="${#fields.hasGlobalErrors()}">
+                    <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
+                </div>
+            </div>
+            <button type="submit">상품등록</button>
+            <button type="button" th:onclick="|location.href='@{/product}'|">취소</button>
+        </form>
+    </div>
+    <div th:replace="fragments/footer :: footer" />
+</div>
+</body>
+</html>
