@@ -9,7 +9,7 @@
     <div th:replace="fragments/divHeader :: divHeader" />
     <div class="row">
         <form th:action="@{/order}" method="post">
-            <input th:field="${product.id}" type="hidden">
+            <input type="hidden" th:id="productId" th:name="id" th:value="${product.id}">
             <div class="row">
                 <!-- 1 + N 문제, 패치 조인 사용해야함 -->
                 <img th:src="|/images/${product.productImage['storeImageName']}|">
@@ -27,7 +27,7 @@
                 주문할 수량 <input type="number" th:id="count" th:name="count" value="1" min="1" max="10">
             </div>
             <button type="submit">주문</button>
-            <button type="button" onclick="put()">장바구니 담기</button>
+            <button type="button" th:onclick="put()">장바구니 담기</button>
         </form>
     </div>
     <div th:replace="fragments/footer :: footer" />

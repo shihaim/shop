@@ -20,6 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
         //로그인을 하지 않을 경우 해당 경로만 이동 가능
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
@@ -27,7 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns(
                         "/api/v1/**",
                         "/",
-                        "/member/sign-up", "/member/sign-in", "/member/logout",
+                        "/member/sign-up", "/member/sign-in",
                         "/products/*",
                         "/images/**", "/css/**", "/js/**", "/*.ico", "/error");
 

@@ -1,6 +1,5 @@
 function put() {
-
-    var productId = $('#id').val();
+    var productId = $('#productId').val();
     var count = $('#count').val();
 
     var cartForm = $('<form></form>');
@@ -21,15 +20,15 @@ function cancel(id) {
         cartId: id
     };
 
-    console.log(data);
-
     $.ajax({
         type: 'DELETE',
-        url: '/member/' + memberId + '/cart',
+        url: '/member/' + memberId + '/my-cart',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data)
     }).done(function() {
-        location.href = '/member/' + memberId + '/my-page';
+        location.replace('/member/' + memberId + '/my-cart');
+    }).fail(function(error) {
+        alert(JSON.stringify(error));
     });
 }

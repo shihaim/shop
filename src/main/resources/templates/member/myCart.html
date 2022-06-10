@@ -8,19 +8,23 @@
 <div class="container">
     <div th:replace="fragments/divHeader :: divHeader" />
     <h1>내 장바구니</h1>
-    <div class="row">
+    <form action="/cart-order" method="post">
         <input type="hidden" th:id="memberId" th:value="${loginMember.memberId}">
-        <div th:each="cart : ${carts}" class="row" style="border: 2px black solid;">
-            <div class="col">
-                <div class="col"><input type="checkbox" th:value="${cart.id}"></div>
-                <!-- 1 + N 문제, 패치 조인 사용해야함 -->
-                <img th:src="|/images/${cart.product.productImage['storeImageName']}|" width="50" height="50">
-                <p th:text="${cart.product['name']}">상품이름</p>
-                <p th:text="${cart.count}">주문할 수량</p>
+        <input type="hidden" th:name="_cartIds" value="on">
+        <div class="row">
+            <div th:each="cart : ${carts}" class="col" style="border: 2px black solid;">
+                <div class="col">
+                    <input type="checkbox" th:name="cartIds" th:value="${cart.id}">
+                    <!-- 1 + N 문제, 패치 조인 사용해야함 -->
+                    <img th:src="|/images/${cart.product.productImage['storeImageName']}|" width="50" height="50">
+                    <p th:text="${cart.product['name']}">상품이름</p>
+                    <p th:text="${cart.count}">주문할 수량</p>
+                </div>
+                <button type="button" th:onclick="cancel([[${cart.id}]])">담기 취소</button>
             </div>
-            <button type="button" th:onclick="|cancel(${cart.id})|">담기 취소</button>
         </div>
-    </div>
+        <button type="submit">주문</button>
+    </form>
     <div th:replace="fragments/footer :: footer" />
 </div>
 </body>

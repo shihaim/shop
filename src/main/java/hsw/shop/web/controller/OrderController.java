@@ -19,7 +19,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    //주문
+    //주문 -> 인터셉터가 GET 메서드 못찾는다고 오류 발생함. 다른 URL 생각해야함.
     @PostMapping("/order")
     public String order(@Login Member loginMember,
                         @RequestParam("id") Long productId,
@@ -37,7 +37,7 @@ public class OrderController {
         return "redirect:/member/" + loginMember.getMemberId() + "/my-page";
     }
 
-    //주문 취소
+    //주문 취소 -> POST /member/{memberId}/my-page 생각해봐야 할 듯. 인터셉터가 GET 메서드 못찾는다고 오류 발생함.
     @PostMapping("/cancel")
     public String cancel(@Login Member loginMember, @RequestParam("id") Long orderId) {
 
