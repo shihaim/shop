@@ -6,6 +6,7 @@ import hsw.shop.repository.CartRepository;
 import hsw.shop.repository.MemberRepository;
 import hsw.shop.repository.OrderRepository;
 import hsw.shop.repository.ProductRepository;
+import hsw.shop.web.dto.OrderDetailDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -77,4 +79,15 @@ public class OrderService {
         Order order = orderRepository.findOne(orderId);
         order.cancel();
     }
+
+    //상세 주문 내역
+    @Transactional(readOnly = true)
+    public List<OrderDetailDto> orderDetailList(Long orderId) {
+        List<OrderDetail> orderDetails = orderRepository.findOrderDetailsByOrderId(orderId);
+        List<OrderDetailDto> result = orderDetails.stream()
+                .map(od -> new OrderDetailDto(od))
+                .collect(Collectors.toList());
+        return result;
+    }
+
 }

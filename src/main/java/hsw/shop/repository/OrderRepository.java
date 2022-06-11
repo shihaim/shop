@@ -1,6 +1,7 @@
 package hsw.shop.repository;
 
 import hsw.shop.domain.Order;
+import hsw.shop.domain.OrderDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +26,18 @@ public class OrderRepository {
         return em.createQuery(
                         "select o from Order o" +
                                 " join o.member m" +
-                                " on o.member.memberId = m.memberId", Order.class)
+                                " on o.member.memberId = :memberId", Order.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
+
+    public List<OrderDetail> findOrderDetailsByOrderId(Long orderId) {
+        return em.createQuery(
+                        "select od from OrderDetail od" +
+                                " join od.order o" +
+                                " join od.product p" +
+                                " on od.order.id = :orderId", OrderDetail.class)
+                .setParameter("orderId", orderId)
                 .getResultList();
     }
 

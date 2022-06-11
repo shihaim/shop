@@ -2,15 +2,22 @@ package hsw.shop.web.controller;
 
 import hsw.shop.domain.Member;
 import hsw.shop.domain.MemberRole;
+import hsw.shop.repository.OrderRepository;
 import hsw.shop.service.OrderService;
 import hsw.shop.web.Login;
+import hsw.shop.web.SessionConst;
+import hsw.shop.web.dto.OrderDetailDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -18,6 +25,7 @@ import java.io.IOException;
 public class OrderController {
 
     private final OrderService orderService;
+    private final OrderRepository orderRepository;
 
     //주문 -> 인터셉터가 GET 메서드 못찾는다고 오류 발생함. 다른 URL 생각해야함.
     @PostMapping("/order")
@@ -53,4 +61,15 @@ public class OrderController {
     }
 
     //상세 주문 내역
+    @GetMapping("/member/{memberId}/my-page/{orderId}")
+    public String orderDetailPage(@Login Member loginMember, @PathVariable("orderId") Long orderId, Model model) {
+
+        List<OrderDetailDto> orderDetails = orderService.orderDetailList(orderId);
+        model.addAttribute("orderDetails", orderDetails);
+        int totalPrice = orderRepository.findOne(orderId).getTotalOrderPrice();
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+
+        return "order/OrderDetail";
+    }
 }

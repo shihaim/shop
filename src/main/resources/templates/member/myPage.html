@@ -15,10 +15,16 @@
         <!-- 주문 내역 확인 -->
         <form action="/cancel" method="post" th:each="order : ${orders}" class="col" style="border: 2px black solid;">
             <input type="hidden" th:name="id" th:value="${order.id}">
-            <p th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm:ss')}">yyyy-MM-dd HH:mm:ss</p>
+            주문 날짜: <p th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm:ss')}">yyyy-MM-dd HH:mm:ss</p>
             <!-- 1 + N 문제, 패치 조인 사용해야함 -->
-            <p th:text="${order.delivery['deliveryStatus']}">배송상태</p>
-            <p th:text="${order.status}">주문상태</p>
+            배송상태:
+            <p th:if="${#strings.equals(order.delivery['deliveryStatus'], 'READY')}" th:text="|배송 준비중|">배송상태</p>
+            <p th:if="${#strings.equals(order.delivery['deliveryStatus'], 'COMPLETE')}" th:text="|배송 완료|">배송상태</p>
+            주문상태: <p th:text="${order.status}">주문상태</p>
+            <button type="button"
+                    th:onclick="|location.href='@{/member/{memberId}/my-page/{orderId}(memberId=${loginMember.memberId}, orderId=${order.id})}'|">
+                상세 주문 내역
+            </button>
             <button th:if="${#strings.equals(order.status, 'ORDER')}" type="submit">주문 취소</button>
         </form>
     </div>

@@ -49,12 +49,6 @@ public class Member {
         this.role = role;
     }
 
-
-    //로그인 로직
-    public void signIn() {
-
-    }
-
     //회원 수정
     public void update(MemberUpdateDto memberUpdateDto) {
         this.name = memberUpdateDto.getName();

@@ -26,11 +26,12 @@ public class CartRepository {
                 .getResultList();
     }
 
-    public List<Cart> findAllByMemberId(Long id) {
+    public List<Cart> findAllByMemberId(Long memberId) {
         return em.createQuery(
                 "select c from Cart c" +
                         " join c.member m" +
-                        " on c.member.memberId = m.memberId")
+                        " on m.memberId = :memberId")
+                .setParameter("memberId", memberId)
                 .getResultList();
     }
 
