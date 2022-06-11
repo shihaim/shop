@@ -7,10 +7,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/divHeader :: divHeader" />
-    <div class="row">
-        <a th:href="@{/member/{memberId}/my-info(memberId=${loginMember.memberId})}">내 정보 수정</a>
-        <a th:href="@{/member/{memberId}/my-cart(memberId=${loginMember.memberId})}">장바구니</a>
-    </div>
+    <div
     <div>
         <!-- 회원 정보 -->
         <div style="border: 2px black solid;">

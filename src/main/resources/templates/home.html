@@ -7,19 +7,29 @@
 <body>
     <div class="container">
         <div th:replace="fragments/divHeader :: divHeader" />
-        <div class="row">
-            <!-- 상품 리스트 -->
-            <div th:each="product : ${products}" class="col" style="border: 2px black solid;">
-                <a th:href="@{products/{productId}(productId=${product.id})}">
-                    <div class="col">
-                        <!-- 1 + N 문제, 패치 조인 사용해야함 -->
-                        <img th:src="|/images/${product.productImage['storeImageName']}|" width="100" height="100">
-                    </div>
-                    <p th:text="${product.name}" class="col">상품이름</p>
-                    <p th:text="${product.price}" class="col">상품가격</p>
-                    <p th:text="${product.description}" class="col">상품설명</p>
-                </a>
-            </div>
+        <div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">상품이미지</th>
+                        <th scope="col">상품이름</th>
+                        <th scope="col">상품가격</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="product : ${products}">
+                        <th scope="row">
+                            <a th:href="@{/products/{productId}(productId=${product.id})}">
+                                <p th:text="${product.id}">상품번호</p>
+                            </a>
+                        </th>
+                        <td><img th:src="|/images/${product.productImage['storeImageName']}|" width="100" height="100"></td>
+                        <td><p th:text="${product.name}" class="col">상품이름</p></td>
+                        <td><p th:text="${product.price}" class="col">상품가격</p></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div th:replace="fragments/footer :: footer" />
     </div>

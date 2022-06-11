@@ -7,26 +7,43 @@
 <body>
 <div class="container">
     <div th:replace="fragments/divHeader :: divHeader" />
-    <div class="row">
+    <div>
         <a th:href="@{/member/{memberId}/my-info(memberId=${loginMember.memberId})}">내 정보 수정</a>
-        <a th:href="@{/member/{memberId}/my-cart(memberId=${loginMember.memberId})}">장바구니</a>
     </div>
-    <div class="row">
-        <!-- 주문 내역 확인 -->
-        <form action="/cancel" method="post" th:each="order : ${orders}" class="col" style="border: 2px black solid;">
-            <input type="hidden" th:name="id" th:value="${order.id}">
-            주문 날짜: <p th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm:ss')}">yyyy-MM-dd HH:mm:ss</p>
-            <!-- 1 + N 문제, 패치 조인 사용해야함 -->
-            배송상태:
-            <p th:if="${#strings.equals(order.delivery['deliveryStatus'], 'READY')}" th:text="|배송 준비중|">배송상태</p>
-            <p th:if="${#strings.equals(order.delivery['deliveryStatus'], 'COMPLETE')}" th:text="|배송 완료|">배송상태</p>
-            주문상태: <p th:text="${order.status}">주문상태</p>
-            <button type="button"
-                    th:onclick="|location.href='@{/member/{memberId}/my-page/{orderId}(memberId=${loginMember.memberId}, orderId=${order.id})}'|">
-                상세 주문 내역
-            </button>
-            <button th:if="${#strings.equals(order.status, 'ORDER')}" type="submit">주문 취소</button>
-        </form>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">주문상태</th>
+                    <th scope="col">배송상태</th>
+                    <th scope="col">주문날짜</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 주문 내역 확인 -->
+                <form action="/cancel" method="post" th:each="order : ${orders}" class="col" style="border: 2px black solid;">
+                    <input type="hidden" th:name="id" th:value="${order.id}">
+                    <tr>
+                        <th scope="row"><p th:text="${order.id}">주문번호</p></th>
+                        <td><p th:text="${order.status}">주문상태</p></td>
+                        <td>
+                            <p th:if="${#strings.equals(order.delivery['deliveryStatus'], 'READY')}" th:text="|배송 준비중|">배송상태</p>
+                            <p th:if="${#strings.equals(order.delivery['deliveryStatus'], 'COMPLETE')}" th:text="|배송 완료|">배송상태</p>
+                        </td>
+                        <td><p th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm:ss')}">yyyy-MM-dd HH:mm:ss</p></td>
+                        <td>
+                            <button type="button" class="btn btn-info"
+                                    th:onclick="|location.href='@{/member/{memberId}/my-page/{orderId}(memberId=${loginMember.memberId}, orderId=${order.id})}'|">
+                                상세 주문 내역
+                            </button>
+                            <button th:if="${#strings.equals(order.status, 'ORDER')}" type="submit" class="btn btn-danger">주문 취소</button>
+                        </td>
+                    </tr>
+                </form>
+            </tbody>
+        </table>
     </div>
     <div th:replace="fragments/footer :: footer" />
 </div>
