@@ -5,29 +5,50 @@
     <title>Title</title>
 </head>
 <body>
-<div class="container">
+<div class="container py-4">
+
     <div th:replace="fragments/divHeader :: divHeader" />
-    <div
-    <div>
-        <!-- 회원 정보 -->
-        <div style="border: 2px black solid;">
-            <p th:text="${loginMember.name}">회원 이름</p>
-            <p th:text="${loginMember.address1}">주소</p>
-            <p th:text="${loginMember.address2}">상세 주소</p>
-        </div>
-        <!-- 총 주문 가격 -->
-        <div style="border: 2px black solid;">
-            총 주문 가격: <p th:text="${totalPrice}"></p>
-        </div>
-        <!-- 상세 주문 내역 확인 -->
-        <div th:each="orderDetail : ${orderDetails}" style="border: 2px black solid;">
-            상품 이미지: <img th:src="|/images/${orderDetail.filename}|" width="100" height="100"><br>
-            상품 이름: <p th:text="${orderDetail.productName}"></p>
-            상품 가격: <p th:text="${orderDetail.price}"></p>
-            주문한 수량: <p th:text="${orderDetail.count}"></p>
+
+    <div class="p-2 mb-4 bg-light border rounded-3 w-50">
+        <div class="container-fluid">
+            <h5><strong th:text="${loginMember.name}"></strong></h5>
+            <span th:text="${loginMember.address1}">주소</span>
+            <span th:text="${loginMember.address2}">상세 주소</span>
+            <p th:text="${loginMember.phone}">전화번호</p>
         </div>
     </div>
+
+    <div class="p-2 mb-4 bg-light border rounded-3 w-50">
+        <div class="container-fluid">
+            <div>
+                <h5><strong>총 주문 가격</strong></h5>
+                <p th:text="|${totalPrice} 원|"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-2 mb-4 bg-light border rounded-3 w-50" th:each="orderDetail : ${orderDetails}">
+        <div class="container-fluid">
+            <h5><strong>상세 주문 정보</strong></h5>
+            <div class="row align-items-md-stretch">
+                <div class="col-md-3">
+                    <div class="h-100 p-2">
+                        <img class="w-100 h-100" th:src="|/images/${orderDetail.filename}|">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="h-100 p-2">
+                        <p th:text="${orderDetail.productName}">상품이름</p>
+                        <p th:text="|${orderDetail.price} 원|">상품가격</p>
+                        <p th:text="|${orderDetail.count} 개|">주문한 수량</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div th:replace="fragments/footer :: footer" />
+
 </div>
 </body>
 </html>

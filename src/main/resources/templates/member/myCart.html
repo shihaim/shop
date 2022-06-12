@@ -23,10 +23,10 @@
             </thead>
             <tbody>
                 <tr th:each="cart : ${carts}">
-                    <td><input type="checkbox" th:name="cartIds" th:value="${cart.id}"></td>
+                    <td><div class="form-check"><input type="checkbox" class="form-check-input" th:name="cartIds" th:value="${cart.id}"></div></td>
                     <td><img th:src="|/images/${cart.product.productImage['storeImageName']}|" width="50" height="50"></td>
                     <td><p th:text="${cart.product['name']}">상품이름</p></td>
-                    <td><p th:text="${cart.count}">주문할 수량</p></td>
+                    <td><p th:text="|${cart.count} 개|">주문할 수량</p></td>
                     <td><button type="button" th:onclick="cancel([[${cart.id}]])" class="btn btn-outline-danger">담기 취소</button></td>
                 </tr>
             </tbody>

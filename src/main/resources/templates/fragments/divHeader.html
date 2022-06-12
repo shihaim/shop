@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="divHeader">
-    <div>
-        <a th:href="@{/}"><h1>로고</h1></a>
-    </div>
-    <div>
-        <!-- home에서만 검색이 가능하게끔 만들어야 할 듯 -->
-        <input type="text" placeholder="상품 검색">
-    </div>
-    <div th:if="${loginMember == null}">
-        <a th:href="@{/member/sign-in}">로그인</a>
-        <a th:href="@{/member/sign-up}">회원가입</a>
-    </div>
-    <div th:unless="${loginMember == null}">
-        <p th:text="|환영합니다. ${loginMember.name}님!|"></p>
-        <a th:href="@{/member/{memberId}/my-page(memberId=${loginMember.memberId})}">마이페이지</a>
-        <a th:href="@{/member/{memberId}/my-cart(memberId=${loginMember.memberId})}">장바구니</a>
-        <a th:href="|#|" th:onclick="goPost()">로그아웃</a>
+<div class="container" th:fragment="divHeader">
+    <div class="row">
+        <div class="col-sm-3">
+            <a th:href="@{/}"><h1>로고</h1></a>
+        </div>
+        <div class="col-sm-6">
+            <!-- home에서만 검색이 가능하게끔 만들어야 할 듯 -->
+            <input type="text" placeholder="상품 검색">
+        </div>
+        <div class="col-sm-3" th:if="${loginMember == null}">
+            <a th:href="@{/member/sign-in}">로그인</a>
+            <a th:href="@{/member/sign-up}">회원가입</a>
+        </div>
+        <div class="col-sm-3" th:unless="${loginMember == null}">
+            <p th:text="|환영합니다. ${loginMember.name}님!|"></p>
+            <a th:href="@{/member/{memberId}/my-page(memberId=${loginMember.memberId})}">마이페이지</a>
+            <a th:href="@{/member/{memberId}/my-cart(memberId=${loginMember.memberId})}">장바구니</a>
+            <a th:href="|#|" th:onclick="goPost()">로그아웃</a>
+        </div>
     </div>
 </div>

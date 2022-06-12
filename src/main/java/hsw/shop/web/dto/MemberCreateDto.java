@@ -28,7 +28,7 @@ public class MemberCreateDto {
     @NotEmpty(message = "비밀번호를 입력해주세요.")
     private String password;
 
-    private String password_check;
+    private String passwordCheck;
 
     @NotEmpty(message = "이름을 입력해주세요.")
     private String name;
@@ -56,10 +56,10 @@ public class MemberCreateDto {
     public MemberCreateDto() {
     }
 
-    public MemberCreateDto(String id, String password, String password_check, String name, String phone, String email, String zipcode, String address1, String address2) {
+    public MemberCreateDto(String id, String password, String passwordCheck, String name, String phone, String email, String zipcode, String address1, String address2) {
         this.id = id;
         this.password = password;
-        this.password_check = password_check;
+        this.passwordCheck = passwordCheck;
         this.name = name;
         this.phone = phone;
         this.email = email;
