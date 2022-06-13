@@ -2,10 +2,7 @@ package hsw.shop.service;
 
 import hsw.shop.domain.*;
 import hsw.shop.domain.Member;
-import hsw.shop.repository.CartRepository;
-import hsw.shop.repository.MemberRepository;
-import hsw.shop.repository.OrderRepository;
-import hsw.shop.repository.ProductRepository;
+import hsw.shop.repository.*;
 import hsw.shop.web.dto.OrderDetailDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +28,10 @@ public class OrderService {
     public Long order(Long memberId, Long productId, int count) {
 
         //엔티티 조회
-        Member member = memberRepository.findOne(memberId);
-        Product product = productRepository.findOne(productId);
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. memberId = " + memberId));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 상품입니다. productId = " + productId));
 
         //배송 정보 조회
         Delivery delivery = Delivery.createDelivery(member);
@@ -52,7 +51,8 @@ public class OrderService {
     public Long order(Long memberId, List<Long> carts) {
 
         //엔티티 조회
-        Member member = memberRepository.findOne(memberId);
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. memberId = " + memberId));
 
         //배송 정보 조회
         Delivery delivery = Delivery.createDelivery(member);
@@ -60,10 +60,11 @@ public class OrderService {
         //상세 주문 생성
         List<OrderDetail> orderDetails = new ArrayList<>();
         for (Long cartId : carts) {
-            Cart cart = cartRepository.findOne(cartId);
+            Cart cart = cartRepository.findById(cartId)
+                    .orElseThrow(() -> new IllegalStateException("존재하지 않는 상품입니다. cartId = " + cartId));
             OrderDetail orderDetail = OrderDetail.createOrderDetail(cart.getProduct(), cart.getProduct().getPrice(), cart.getCount());
             orderDetails.add(orderDetail);
-            cartRepository.remove(cart);
+            cartRepository.delete(cart);
         }
 
         //주문 생성
@@ -76,7 +77,8 @@ public class OrderService {
 
     //주문 취소
     public void cancelOrder(Long orderId) {
-        Order order = orderRepository.findOne(orderId);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않은 주문입니다. orderId = " + orderId));
         order.cancel();
     }
 

@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -25,6 +25,7 @@ public class ProductService {
     private final ImageStore imageStore;
 
     //상품 저장
+    @Transactional
     public Long saveProduct(ProductCreateDto productCreateDto) throws IOException {
 
         //상품 이미지 생성
@@ -39,20 +40,21 @@ public class ProductService {
     }
 
     //상품 수정
+    @Transactional
     public void updateProduct(Long productId, ProductUpdateDto productUpdateDto) {
-        Product product = productRepository.findOne(productId);
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 상품입니다. productId = " + productId));
 
         product.update(productUpdateDto);
     }
 
     //상품 조회
-    @Transactional(readOnly = true)
     public Product findProduct(Long productId) {
-        return productRepository.findOne(productId);
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 상품입니다. productId = " + productId));
     }
 
     //상품 전체 조회
-    @Transactional(readOnly = true)
     public List<Product> findProducts() {
         return productRepository.findAll();
     }

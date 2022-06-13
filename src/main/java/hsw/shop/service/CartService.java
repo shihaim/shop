@@ -3,9 +3,7 @@ package hsw.shop.service;
 import hsw.shop.domain.Cart;
 import hsw.shop.domain.Member;
 import hsw.shop.domain.Product;
-import hsw.shop.repository.CartRepository;
-import hsw.shop.repository.MemberRepository;
-import hsw.shop.repository.ProductRepository;
+import hsw.shop.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,8 +21,10 @@ public class CartService {
     public Long put(Long memberId, Long productId, int count) {
 
         //엔티티 조회
-        Member member = memberRepository.findOne(memberId);
-        Product product = productRepository.findOne(productId);
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. memberId = " + memberId));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 상품입니다. productId = " + productId));
 
         //장바구니 상품 생성
         Cart cart = Cart.createCart(member, product, count);
@@ -36,7 +36,9 @@ public class CartService {
 
     //담기 취소
     public void cancel(Long cartId) {
-        Cart cart = cartRepository.findOne(cartId);
-        cartRepository.remove(cart);
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 상품입니다. cartId = " + cartId));
+
+        cartRepository.delete(cart);
     }
 }

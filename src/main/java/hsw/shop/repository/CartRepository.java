@@ -1,41 +1,16 @@
 package hsw.shop.repository;
 
 import hsw.shop.domain.Cart;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
-@Repository
-@RequiredArgsConstructor
-public class CartRepository {
+public interface CartRepository extends JpaRepository<Cart, Long> {
 
-    private final EntityManager em;
-
-    public void save(Cart cart) {
-        em.persist(cart);
-    }
-
-    public Cart findOne(Long id) {
-        return em.find(Cart.class, id);
-    }
-
-    public List<Cart> findAll() {
-        return em.createQuery("select c from Cart c", Cart.class)
-                .getResultList();
-    }
-
-    public List<Cart> findAllByMemberId(Long memberId) {
-        return em.createQuery(
-                "select c from Cart c" +
-                        " join c.member m" +
-                        " on m.memberId = :memberId")
-                .setParameter("memberId", memberId)
-                .getResultList();
-    }
-
-    public void remove(Cart cart) {
-        em.remove(cart);
-    }
+    @Query("select c from Cart c" +
+            " join c.member m" +
+            " on m.memberId = :memberId")
+    List<Cart> findAllByMemberId(@Param("memberId") Long memberId);
 }

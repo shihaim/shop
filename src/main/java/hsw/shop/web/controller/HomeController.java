@@ -3,8 +3,8 @@ package hsw.shop.web.controller;
 import hsw.shop.domain.Member;
 import hsw.shop.domain.Order;
 import hsw.shop.domain.Product;
-import hsw.shop.repository.OrderRepository;
-import hsw.shop.repository.ProductRepository;
+import hsw.shop.repository.OrderJpaRepository;
+import hsw.shop.repository.ProductJpaRepository;
 import hsw.shop.service.ImageStore;
 import hsw.shop.web.Login;
 import hsw.shop.web.SessionConst;
@@ -28,9 +28,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final ProductRepository productRepository;
+    private final ProductJpaRepository productRepository;
     private final ImageStore imageStore;
-    private final OrderRepository orderRepository;
+    private final OrderJpaRepository orderRepository;
 
     @GetMapping("/")
     public String home(@Login Member loginMember, Model model) {
