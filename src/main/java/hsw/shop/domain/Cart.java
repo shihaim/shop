@@ -9,7 +9,7 @@ import static javax.persistence.FetchType.*;
 
 @Entity
 @Getter
-public class Cart {
+public class Cart extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name = "cart_id")

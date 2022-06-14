@@ -30,7 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/",
                         "/member/sign-up", "/member/sign-in",
                         "/products/*",
-                        "/images/**", "/css/**", "/js/**", "/*.ico", "/error");
+                        "/images/**", "/css/**", "/js/**", "/image/**", "/*.ico", "/error");
 
         //ADMIN일 경우 상품 등록 가능
         registry.addInterceptor(new AdminCheckInterceptor())

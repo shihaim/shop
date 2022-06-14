@@ -4,7 +4,7 @@ import hsw.shop.domain.Member;
 import hsw.shop.domain.MemberRole;
 import hsw.shop.repository.OrderRepository;
 import hsw.shop.service.OrderService;
-import hsw.shop.web.Login;
+import hsw.shop.web.argumentresolver.Login;
 import hsw.shop.web.SessionConst;
 import hsw.shop.web.dto.OrderDetailDto;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,6 @@ public class OrderController {
     public String order(@Login Member loginMember,
                         @RequestParam("id") Long productId,
                         @RequestParam("count") int count) throws IOException {
-        log.info("loginMember={}", loginMember);
 
         //어드민 계정일 경우 주문 막기
         if (loginMember.getRole().equals(MemberRole.ADMIN)) {

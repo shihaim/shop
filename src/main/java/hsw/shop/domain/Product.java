@@ -11,7 +11,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
-public class Product {
+public class Product extends BaseTimeEntity{
 
     @Id
     @GeneratedValue
@@ -75,6 +75,4 @@ public class Product {
         this.price = productUpdateDto.getPrice();
         this.description = productUpdateDto.getDescription();
     }
-
-    //상품 이미지 생성
 }

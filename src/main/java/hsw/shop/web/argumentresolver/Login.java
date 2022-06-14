@@ -1,4 +1,4 @@
-package hsw.shop.web;
+package hsw.shop.web.argumentresolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

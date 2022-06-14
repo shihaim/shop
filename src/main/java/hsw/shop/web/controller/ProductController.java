@@ -3,7 +3,7 @@ package hsw.shop.web.controller;
 import hsw.shop.domain.Member;
 import hsw.shop.domain.Product;
 import hsw.shop.service.ProductService;
-import hsw.shop.web.Login;
+import hsw.shop.web.argumentresolver.Login;
 import hsw.shop.web.SessionConst;
 import hsw.shop.web.dto.ProductCreateDto;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,6 @@ public class ProductController {
     public String productSave(@Valid @ModelAttribute("productSaveForm") ProductCreateDto productCreateDto, BindingResult bindingResult) throws IOException {
 
         if (productCreateDto.getProductImage().isEmpty()) {
-            log.info("product image is empty");
             bindingResult.reject("emptyProductImage" ,"상품 이미지를 넣어주세요.");
         }
 

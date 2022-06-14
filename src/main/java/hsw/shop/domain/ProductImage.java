@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
-public class ProductImage {
+public class ProductImage extends BaseTimeEntity{
 
     @Id
     @GeneratedValue

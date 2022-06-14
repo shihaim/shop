@@ -6,7 +6,7 @@ import hsw.shop.domain.Product;
 import hsw.shop.repository.OrderJpaRepository;
 import hsw.shop.repository.ProductJpaRepository;
 import hsw.shop.service.ImageStore;
-import hsw.shop.web.Login;
+import hsw.shop.web.argumentresolver.Login;
 import hsw.shop.web.SessionConst;
 import hsw.shop.web.dto.MemberCreateDto;
 import hsw.shop.web.dto.MemberSignInDto;
@@ -34,9 +34,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(@Login Member loginMember, Model model) {
-
-        log.info("loginMember={}", loginMember);
-
         List<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
         model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
@@ -65,8 +62,6 @@ public class HomeController {
 
     @GetMapping("/member/{memberId}/my-page")
     public String myPage(@Login Member loginMember, Model model) {
-        log.info("loginMember={}", loginMember);
-        //주문 내역 보여주기
         List<Order> orders = orderRepository.findAllByMemberId(loginMember.getMemberId());
         model.addAttribute("orders", orders);
         model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);

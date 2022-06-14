@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-public class Delivery {
+public class Delivery extends BaseTimeEntity{
 
     @Id
     @GeneratedValue

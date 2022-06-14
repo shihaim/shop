@@ -16,6 +16,7 @@
 * Java 8
 * Spring Boot
 * JPA
+* H2 DB
 
 DB
 ---

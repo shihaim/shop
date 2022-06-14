@@ -3,7 +3,7 @@ package hsw.shop.web.controller;
 import hsw.shop.domain.Member;
 import hsw.shop.domain.MemberRole;
 import hsw.shop.service.MemberService;
-import hsw.shop.web.Login;
+import hsw.shop.web.argumentresolver.Login;
 import hsw.shop.web.SessionConst;
 import hsw.shop.web.dto.MemberCreateDto;
 import hsw.shop.web.dto.MemberSignInDto;

@@ -1,7 +1,6 @@
 package hsw.shop.web.argumentresolver;
 
 import hsw.shop.domain.Member;
-import hsw.shop.web.Login;
 import hsw.shop.web.SessionConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

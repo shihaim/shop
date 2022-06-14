@@ -10,7 +10,7 @@ import static javax.persistence.FetchType.*;
 @Entity
 @Table(name = "order_detail")
 @Getter
-public class OrderDetail {
+public class OrderDetail extends BaseTimeEntity{
 
     @Id
     @GeneratedValue
