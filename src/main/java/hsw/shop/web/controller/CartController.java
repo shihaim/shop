@@ -56,7 +56,7 @@ public class CartController {
         return "redirect:/member/" + loginMember.getMemberId() + "/my-cart";
     }
 
-    //장바구니 주문
+    //장바구니 주문(MultiValueMap 이용해보기)
     @PostMapping("/cart-order")
     public String myCartOrder(@Login Member loginMember, @RequestParam(value = "cartIds", required = false) List<Long> cartIds) {
 

@@ -37,7 +37,7 @@ public class CartService {
     //담기 취소
     public void cancel(Long cartId) {
         Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 상품입니다. cartId = " + cartId));
+                .orElseThrow(() -> new IllegalStateException("담겨져있는 상품이 아닙니다. cartId = " + cartId));
 
         cartRepository.delete(cart);
     }

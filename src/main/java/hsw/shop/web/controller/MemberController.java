@@ -97,7 +97,6 @@ public class MemberController {
                                BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
-            model.addAttribute("myInfoForm", updateDto);
             model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
             return "member/myInfoUpdate";

@@ -1,5 +1,6 @@
 package hsw.shop.web.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,4 +15,13 @@ public class MemberSignInDto {
 
     @NotEmpty(message = "비밀번호를 입력해주세요.")
     private String password;
+
+    public MemberSignInDto() {
+    }
+
+    @Builder
+    public MemberSignInDto(String id, String password) {
+        this.id = id;
+        this.password = password;
+    }
 }
