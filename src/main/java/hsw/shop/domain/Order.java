@@ -114,8 +114,4 @@ public class Order {
             orderDetail.cancel();
         }
     }
-
-    public int getTotalOrderPrice() {
-        return getOrderDetails().stream().mapToInt(OrderDetail::getTotalPrice).sum();
-    }
 }

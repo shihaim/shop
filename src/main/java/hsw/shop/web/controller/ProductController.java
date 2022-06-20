@@ -1,11 +1,11 @@
 package hsw.shop.web.controller;
 
 import hsw.shop.domain.Member;
-import hsw.shop.domain.Product;
 import hsw.shop.service.ProductService;
 import hsw.shop.web.argumentresolver.Login;
 import hsw.shop.web.SessionConst;
 import hsw.shop.web.dto.ProductCreateDto;
+import hsw.shop.web.dto.ProductDetailDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -58,7 +58,7 @@ public class ProductController {
     //상품 상세
     @GetMapping("/products/{productId}")
     public String productDetailPage(@Login Member loginMember,@PathVariable("productId") Long productId, Model model) {
-        Product product = productService.findProduct(productId);
+        ProductDetailDto product = new ProductDetailDto(productService.findProduct(productId));
         model.addAttribute("product", product);
         model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 

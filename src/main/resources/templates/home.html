@@ -25,7 +25,7 @@
                             <p th:text="${product.id}">상품번호</p>
                         </a>
                     </th>
-                    <td><img th:src="|/images/${product.productImage['storeImageName']}|" width="100" height="100"></td>
+                    <td><img th:src="|/images/${product.storeImageName}|" width="100" height="100"></td>
                     <td><p th:text="${product.name}" class="col">상품이름</p></td>
                     <td><p th:text="|${product.price} 원|" class="col">상품가격</p></td>
                 </tr>

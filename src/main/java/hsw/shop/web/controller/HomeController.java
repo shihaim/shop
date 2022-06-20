@@ -1,15 +1,16 @@
 package hsw.shop.web.controller;
 
 import hsw.shop.domain.Member;
-import hsw.shop.domain.Order;
 import hsw.shop.domain.Product;
-import hsw.shop.repository.OrderJpaRepository;
-import hsw.shop.repository.ProductJpaRepository;
+import hsw.shop.repository.OrderRepository;
+import hsw.shop.repository.ProductRepository;
 import hsw.shop.service.ImageStore;
 import hsw.shop.web.argumentresolver.Login;
 import hsw.shop.web.SessionConst;
 import hsw.shop.web.dto.MemberCreateDto;
 import hsw.shop.web.dto.MemberSignInDto;
+import hsw.shop.web.dto.OrderListDto;
+import hsw.shop.web.dto.ProductListDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -22,19 +23,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final ProductJpaRepository productRepository;
+    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
     private final ImageStore imageStore;
-    private final OrderJpaRepository orderRepository;
 
     @GetMapping("/")
     public String home(@Login Member loginMember, Model model) {
-        List<Product> products = productRepository.findAll();
+        List<ProductListDto> products = productRepository.findByProductList().stream()
+                .map(p -> new ProductListDto(p))
+                .collect(Collectors.toList());
         model.addAttribute("products", products);
         model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
@@ -62,7 +66,9 @@ public class HomeController {
 
     @GetMapping("/member/{memberId}/my-page")
     public String myPage(@Login Member loginMember, Model model) {
-        List<Order> orders = orderRepository.findAllByMemberId(loginMember.getMemberId());
+        List<OrderListDto> orders = orderRepository.findAllByMemberId(loginMember.getMemberId()).stream()
+                .map(o -> new OrderListDto(o))
+                .collect(Collectors.toList());
         model.addAttribute("orders", orders);
         model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 

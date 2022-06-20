@@ -10,7 +10,9 @@ import java.util.List;
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
     @Query("select c from Cart c" +
-            " join c.member m" +
-            " on m.memberId = :memberId")
+            " join fetch c.member m" +
+            " join fetch c.product p" +
+            " join fetch p.productImage pi" +
+            " where m.memberId = :memberId")
     List<Cart> findAllByMemberId(@Param("memberId") Long memberId);
 }

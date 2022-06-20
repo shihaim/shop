@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -50,12 +49,7 @@ public class ProductService {
 
     //상품 조회
     public Product findProduct(Long productId) {
-        return productRepository.findById(productId)
+        return productRepository.findProductById(productId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 상품입니다. productId = " + productId));
-    }
-
-    //상품 전체 조회
-    public List<Product> findProducts() {
-        return productRepository.findAll();
     }
 }

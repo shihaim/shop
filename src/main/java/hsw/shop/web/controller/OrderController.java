@@ -66,9 +66,9 @@ public class OrderController {
         List<OrderDetailDto> orderDetails = orderService.orderDetailList(orderId);
         model.addAttribute("orderDetails", orderDetails);
 
-        int totalPrice = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 주문입니다. orderId = " + orderId))
-                .getTotalOrderPrice();
+        int totalPrice = orderDetails.stream()
+                .mapToInt(od -> od.getPrice() * od.getCount())
+                .sum();
         model.addAttribute("totalPrice", totalPrice);
 
         model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);

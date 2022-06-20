@@ -1,6 +1,5 @@
 package hsw.shop.web.controller;
 
-import hsw.shop.domain.Cart;
 import hsw.shop.domain.Member;
 import hsw.shop.domain.MemberRole;
 import hsw.shop.repository.CartRepository;
@@ -9,6 +8,7 @@ import hsw.shop.service.OrderService;
 import hsw.shop.web.argumentresolver.Login;
 import hsw.shop.web.SessionConst;
 import hsw.shop.web.dto.CartIdRequestDto;
+import hsw.shop.web.dto.CartListDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -28,7 +29,9 @@ public class CartController {
 
     @GetMapping("/member/{memberId}/my-cart")
     public String myCartPage(@Login Member loginMember, Model model) {
-        List<Cart> carts = cartRepository.findAllByMemberId(loginMember.getMemberId());
+        List<CartListDto> carts = cartRepository.findAllByMemberId(loginMember.getMemberId()).stream()
+                .map(c -> new CartListDto(c))
+                .collect(Collectors.toList());
         model.addAttribute("carts", carts);
         model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
