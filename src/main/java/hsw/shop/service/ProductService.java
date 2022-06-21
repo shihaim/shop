@@ -27,6 +27,12 @@ public class ProductService {
     @Transactional
     public Long saveProduct(ProductCreateDto productCreateDto) throws IOException {
 
+        /**
+         * CascadeType.PERSIST를 설정하지 않고 하려면 직접 트랜잭션해야함.
+         * 영속성 전이 사용시 주의 사항
+         *  - 부모 객체를 기준으로 자식 객체(연관 관계 매핑이 되어 있는 객체)에도 연관 관계 매핑이 되어 있을 경우
+         *    사용하면 안된다.
+         */
         //상품 이미지 생성
         ProductImage productImage = imageStore.storeFile(productCreateDto.getProductImage());
         productImageRepository.save(productImage);

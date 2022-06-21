@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -26,18 +27,18 @@ public class Order {
 
     /**
      * 필드 초기화를 했는데도 불구하고 빌더 패턴을 사용하면
-     * 리스트 초기화가 안되서 NullPointerException 발생
-     * 빌더에서 초기화를 한번 더 진행함.
+     * 리스트 초기화가 안되서 NullPointerException 발생.
+     * 빌더에서 초기화를 진행함.
      */
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderDetail> orderDetails = new ArrayList<>();
+    @OneToMany(mappedBy = "order", cascade = PERSIST)
+    private List<OrderDetail> orderDetails;
 
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = LAZY, cascade = PERSIST)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 

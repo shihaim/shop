@@ -1,14 +1,19 @@
 package hsw.shop.service;
 
 import hsw.shop.domain.ProductImage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
+@Slf4j
 @Component
 public class ImageStore {
 
@@ -27,6 +32,18 @@ public class ImageStore {
         String originalFilename = multipartFile.getOriginalFilename();
 
         String storeFileName = createStoreFileName(originalFilename);
+
+        File folder = new File(fileDir);
+
+        if (!folder.exists()) {
+            try {
+                log.info("folder mkdir");
+                folder.mkdirs();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
 
         return ProductImage.createProductImage(originalFilename, storeFileName);

@@ -18,7 +18,7 @@ public class Product extends BaseTimeEntity{
     @Column(name = "product_id")
     private Long id;
 
-    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "product_image_id")
     private ProductImage productImage;
 
