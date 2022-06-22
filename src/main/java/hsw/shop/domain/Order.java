@@ -28,10 +28,11 @@ public class Order {
     /**
      * 필드 초기화를 했는데도 불구하고 빌더 패턴을 사용하면
      * 리스트 초기화가 안되서 NullPointerException 발생.
-     * 빌더에서 초기화를 진행함.
+     * final을 붙여주면 해결.
+     * 빌더에서 초기화를 진행해도 되는데 필드 초기화와 차이점을 모름.
      */
     @OneToMany(mappedBy = "order", cascade = PERSIST)
-    private List<OrderDetail> orderDetails;
+    private final List<OrderDetail> orderDetails = new ArrayList<>();
 
     private LocalDateTime orderDate;
 
@@ -48,7 +49,7 @@ public class Order {
     @Builder
     public Order(Member member, List<OrderDetail> orderDetails, LocalDateTime orderDate, OrderStatus status, Delivery delivery) {
         this.member = member;
-        this.orderDetails = orderDetails;
+//        this.orderDetails = orderDetails;
         this.orderDate = orderDate;
         this.status = status;
         this.delivery = delivery;
@@ -73,7 +74,7 @@ public class Order {
 
         Order order = Order.builder()
                 .member(member)
-                .orderDetails(new ArrayList<>())
+//                .orderDetails(new ArrayList<>())
                 .orderDate(LocalDateTime.now())
                 .status(OrderStatus.ORDER)
                 .delivery(delivery)
@@ -89,7 +90,7 @@ public class Order {
 
         Order order = Order.builder()
                 .member(member)
-                .orderDetails(new ArrayList<>())
+//                .orderDetails(new ArrayList<>())
                 .orderDate(LocalDateTime.now())
                 .status(OrderStatus.ORDER)
                 .delivery(delivery)
