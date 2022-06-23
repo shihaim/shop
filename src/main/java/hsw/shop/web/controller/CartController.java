@@ -28,7 +28,13 @@ public class CartController {
     private final OrderService orderService;
 
     @GetMapping("/member/{memberId}/my-cart")
-    public String myCartPage(@Login Member loginMember, Model model) {
+    public String myCartPage(@Login Member loginMember, @PathVariable("memberId") Long memberId, Model model) {
+
+        //잘못된 회원 id 접근 막기
+        if (loginMember.getMemberId() != memberId) {
+            return "redirect:/";
+        }
+
         List<CartListDto> carts = cartRepository.findAllByMemberId(loginMember.getMemberId()).stream()
                 .map(c -> new CartListDto(c))
                 .collect(Collectors.toList());

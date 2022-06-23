@@ -43,6 +43,7 @@ public class MemberController {
     @PostMapping("/sign-in")
     public String signIn(@Valid @ModelAttribute("signInForm") MemberSignInDto memberSignInDto,
                          BindingResult bindingResult,
+                         @RequestParam(defaultValue = "/") String redirectURL,
                          HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             log.info("field errors={}", bindingResult);
@@ -65,7 +66,9 @@ public class MemberController {
             return "redirect:/product";
         }
 
-        return "redirect:/";
+        log.info("redirectURL={}", redirectURL);
+
+        return "redirect:" + redirectURL;
     }
 
     @PostMapping("/logout")
@@ -84,7 +87,13 @@ public class MemberController {
      * loginMember, myInfoForm을 따로 addAttribute해서 적용하니 해결
      */
     @GetMapping("/{memberId}/my-info")
-    public String myInfoUpdatePage(@Login Member loginMember, Model model) {
+    public String myInfoUpdatePage(@Login Member loginMember, @PathVariable("memberId") Long memberId, Model model) {
+
+        //잘못된 회원 id 접근 막기
+        if (loginMember.getMemberId() != memberId) {
+            return "redirect:/";
+        }
+
         model.addAttribute("myInfoForm", loginMember);
         model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 

@@ -1,7 +1,6 @@
 package hsw.shop.web.controller;
 
 import hsw.shop.domain.Member;
-import hsw.shop.domain.Product;
 import hsw.shop.repository.OrderRepository;
 import hsw.shop.repository.ProductRepository;
 import hsw.shop.service.ImageStore;
@@ -65,10 +64,17 @@ public class HomeController {
     }
 
     @GetMapping("/member/{memberId}/my-page")
-    public String myPage(@Login Member loginMember, Model model) {
+    public String myPage(@Login Member loginMember, @PathVariable("memberId") Long memberId, Model model) {
+
+        //잘못된 회원 id 접근 막기
+        if (loginMember.getMemberId() != memberId) {
+            return "redirect:/";
+        }
+
         List<OrderListDto> orders = orderRepository.findAllByMemberId(loginMember.getMemberId()).stream()
                 .map(o -> new OrderListDto(o))
                 .collect(Collectors.toList());
+
         model.addAttribute("orders", orders);
         model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 

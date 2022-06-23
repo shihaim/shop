@@ -2,7 +2,6 @@ package hsw.shop.web.controller;
 
 import hsw.shop.domain.Member;
 import hsw.shop.domain.MemberRole;
-import hsw.shop.repository.OrderRepository;
 import hsw.shop.service.OrderService;
 import hsw.shop.web.argumentresolver.Login;
 import hsw.shop.web.SessionConst;
@@ -25,7 +24,6 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
-    private final OrderRepository orderRepository;
 
     //주문 -> 인터셉터가 GET 메서드 못찾는다고 오류 발생함. 다른 URL 생각해야함.
     @PostMapping("/order")
@@ -61,7 +59,16 @@ public class OrderController {
 
     //상세 주문 내역
     @GetMapping("/member/{memberId}/my-page/{orderId}")
-    public String orderDetailPage(@Login Member loginMember, @PathVariable("orderId") Long orderId, Model model) {
+    public String orderDetailPage(@Login Member loginMember,
+                                  @PathVariable("memberId") Long memberId,
+                                  @PathVariable("orderId") Long orderId, Model model) {
+
+        //잘못된 회원 id 접근 막기
+        if ((loginMember.getMemberId() != memberId)) {
+            return "redirect:/";
+        }
+
+        log.info("orderId={}", orderId);
 
         List<OrderDetailDto> orderDetails = orderService.orderDetailList(orderId);
         model.addAttribute("orderDetails", orderDetails);

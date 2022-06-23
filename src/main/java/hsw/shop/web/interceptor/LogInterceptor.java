@@ -56,7 +56,7 @@ public class LogInterceptor implements HandlerInterceptor {
     private Long getMemberId(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null) {
-            return -1L;
+            return Long.MIN_VALUE;
         }
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         return member.getMemberId();
