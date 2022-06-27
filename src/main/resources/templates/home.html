@@ -7,7 +7,12 @@
 <body>
 <div class="container py-4">
     <div th:replace="fragments/divHeader :: divHeader" />
-    <div><input type="text" placeholder="상품 검색"></div>
+    <div>
+        <form action="/search" method="get">
+            <input type="text" th:name="productName" placeholder="상품 검색">
+            <button type="submit">검색</button>
+        </form>
+    </div>
     <div>
         <table class="table table-hover">
             <thead>

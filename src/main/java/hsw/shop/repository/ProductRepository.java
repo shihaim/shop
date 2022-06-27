@@ -1,6 +1,7 @@
 package hsw.shop.repository;
 
 import hsw.shop.domain.Product;
+import hsw.shop.repository.custom.ProductRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
 
     @Query("select p.name from Product p where p.id = :id")
     String findNameById(@Param("id") Long id);

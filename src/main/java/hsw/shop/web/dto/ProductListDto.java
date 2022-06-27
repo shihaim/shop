@@ -11,6 +11,9 @@ public class ProductListDto {
     private String name;
     private int price;
 
+    public ProductListDto() {
+    }
+
     public ProductListDto(Product product) {
         this.id = product.getId();
         this.storeImageName = product.getProductImage().getStoreImageName();

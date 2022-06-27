@@ -3,6 +3,7 @@ package hsw.shop.web.controller;
 import hsw.shop.domain.Member;
 import hsw.shop.repository.OrderRepository;
 import hsw.shop.repository.ProductRepository;
+import hsw.shop.repository.custom.ProductSearchCondition;
 import hsw.shop.service.ImageStore;
 import hsw.shop.web.argumentresolver.Login;
 import hsw.shop.web.SessionConst;
@@ -16,9 +17,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -38,6 +37,22 @@ public class HomeController {
         List<ProductListDto> products = productRepository.findByProductList().stream()
                 .map(p -> new ProductListDto(p))
                 .collect(Collectors.toList());
+        model.addAttribute("products", products);
+        model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+
+        return "home";
+    }
+
+    /**
+     * Get: 메서드에선 @ModelAttribute 어노테이션을 활용
+     * Post: 어떤 걸 이용해도 상관 없어 보임.
+     * Put, Delete: 메서드는 Form 형태로 전송이 불가능하기 때문에, JSON 형태로 전달.
+     * 객체일 경우 @RequestBody, 단일 파라미터일 경우 @RequestParam을 이용
+     */
+    @GetMapping("/search")
+    public String search(@Login Member loginMember, @ModelAttribute ProductSearchCondition condition, Model model) {
+        log.info("condition={}", condition);
+        List<ProductListDto> products = productRepository.searchProducts(condition);
         model.addAttribute("products", products);
         model.addAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
