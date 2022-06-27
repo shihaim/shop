@@ -10,12 +10,13 @@
 ---
 ### 프론트엔드
 * Thymeleaf
-* html, css, js
+* html, css, js(jquery)
 * bootstrap
 ### 백엔드
 * Java 8
 * Spring Boot
-* JPA
+* JPA(Spring Data JPA)
+* Querydsl
 * H2 DB
 
 DB
