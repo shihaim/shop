@@ -85,10 +85,19 @@ public class OrderService {
     //상세 주문 내역
     @Transactional(readOnly = true)
     public List<OrderDetailDto> orderDetailList(Long orderId) {
-        List<OrderDetail> orderDetails = orderRepository.findOrderDetailsByOrderId(orderId);
+        List<OrderDetail> orderDetails = orderRepository.findOrderDetailsByOrderId(orderId).orElseGet(null);
+
+        log.info("orderDetails={}", orderDetails);
+
+        if (orderDetails.isEmpty()) {
+            log.info("order details is empty");
+            return null;
+        }
+
         List<OrderDetailDto> result = orderDetails.stream()
                 .map(od -> new OrderDetailDto(od))
                 .collect(Collectors.toList());
+
         return result;
     }
 

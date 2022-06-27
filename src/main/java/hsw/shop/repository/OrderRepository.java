@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
@@ -21,5 +22,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             " join fetch od.product p" +
             " join fetch p.productImage pi" +
             " where o.id = :orderId")
-    List<OrderDetail> findOrderDetailsByOrderId(@Param("orderId") Long orderId);
+    Optional<List<OrderDetail>> findOrderDetailsByOrderId(@Param("orderId") Long orderId);
 }

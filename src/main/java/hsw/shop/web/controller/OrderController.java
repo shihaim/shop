@@ -68,9 +68,14 @@ public class OrderController {
             return "redirect:/";
         }
 
-        log.info("orderId={}", orderId);
-
         List<OrderDetailDto> orderDetails = orderService.orderDetailList(orderId);
+
+        //회원이 주문하지 않는 주문 번호에 요청시 접근 막기
+        if (orderDetails == null) {
+            log.info("order details is null");
+            return "redirect:/member/" + loginMember.getMemberId() + "/my-page";
+        }
+
         model.addAttribute("orderDetails", orderDetails);
 
         int totalPrice = orderDetails.stream()
