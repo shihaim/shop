@@ -8,11 +8,7 @@
 <div class="container py-4">
     <div th:replace="fragments/divHeader :: divHeader" />
     <div>
-        <!--
-            LoginCheckInterceptor redirectURL 부분을 고치면서 알아낸 사실
-            만약 REST 설계로 같은 GET과 POST url이면 th:action만 적어도 실행이 됨. 즉, url을 자동 파싱함.
-        -->
-        <form th:action method="post" th:object="${signInForm}">
+        <form th:action="@{/member/sign-in}" method="post" th:object="${signInForm}">
             <div class="row mb-3">
                 <label th:for="id" class="col-sm-1 col-form-label">아이디</label>
                 <div class="col-sm-3">
