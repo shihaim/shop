@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+
+    <div th:replace="fragments/divHeader :: divHeader" />
+
+    <div>
+        <h1>리뷰 작성</h1>
+        <div th:each="purchasedProduct : ${purchasedProducts}">
+            <a th:href="@{/review/{productId}/save(productId=${purchasedProduct.id})}"
+               onClick="window.open(this.href, '', 'width=500, height=530'); return false;"
+               target="_blank"><img th:src="|/images/${purchasedProduct.storeImageName}|" width="120" height="120"></a>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer" />
+
+</div>
+</body>
+</html>

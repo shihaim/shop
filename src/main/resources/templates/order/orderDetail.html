@@ -38,6 +38,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="h-100 p-2">
+                        <input type="hidden" name="productId" th:value="${orderDetail.productId}">
                         <p th:text="${orderDetail.productName}">상품이름</p>
                         <p th:text="|${orderDetail.price} 원|">상품가격</p>
                         <p th:text="|${orderDetail.count} 개|">주문한 수량</p>
@@ -46,6 +47,7 @@
             </div>
         </div>
     </div>
+    <div><button type="button" class="btn btn-info" th:onclick="|reviewPage()|">리뷰작성</button></div>
 
     <div th:replace="fragments/footer :: footer" />
 

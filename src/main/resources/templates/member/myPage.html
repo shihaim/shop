@@ -27,7 +27,10 @@
                     <input type="hidden" th:name="id" th:value="${order.id}">
                     <tr>
                         <th scope="row"><p th:text="${order.id}">주문번호</p></th>
-                        <td><p th:text="${order.status}">주문상태</p></td>
+                        <td>
+                            <p th:if="${#strings.equals(order.status, 'ORDER')}" th:text="|주문 완료|"></p>
+                            <p th:if="${#strings.equals(order.status, 'CANCEL')}" th:text="|주문 취소|"></p>
+                        </td>
                         <td>
                             <p th:if="${#strings.equals(order.deliveryStatus, 'READY')}" th:text="|배송 준비중|">배송상태</p>
                             <p th:if="${#strings.equals(order.deliveryStatus, 'COMPLETE')}" th:text="|배송 완료|">배송상태</p>
