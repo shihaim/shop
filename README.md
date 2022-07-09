@@ -21,4 +21,4 @@
 
 DB
 ---
-![DB](https://github.com/shihaim/md-image/blob/main/DB.png)
+![ERD_20220709](https://github.com/shihaim/md-image/blob/main/ERD_20220709.png)
