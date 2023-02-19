@@ -18,6 +18,7 @@
 * JPA(Spring Data JPA)
 * Querydsl
 * H2 DB
+* Jenkins 테스트..
 
 DB
 ---
