@@ -49,6 +49,8 @@ public class MemberCreateDto {
     @NotEmpty(message = "상세 주소를 입력해주세요.")
     private String address2;
 
+    private MemberRole role;
+
     /**
      * 기본 생성자 때문에 Setter가 없으면 @ModelAttribute 바인딩이 안됨.
      * https://hyeon9mak.github.io/model-attribute-without-setter/
@@ -69,7 +71,7 @@ public class MemberCreateDto {
     }
 
     @Builder
-    public MemberCreateDto(String id, String password, String name, String phone, String email, String zipcode, String address1, String address2) {
+    public MemberCreateDto(String id, String password, String name, String phone, String email, String zipcode, String address1, String address2, MemberRole role) {
         this.id = id;
         this.password = password;
         this.name = name;
@@ -78,6 +80,7 @@ public class MemberCreateDto {
         this.zipcode = zipcode;
         this.address1 = address1;
         this.address2 = address2;
+        this.role = role;
     }
 
     public Member toEntity() {
@@ -90,7 +93,7 @@ public class MemberCreateDto {
                 .zipcode(zipcode)
                 .address1(address1)
                 .address2(address2)
-                .role(MemberRole.USER)
+                .role(role)
                 .build();
     }
 }
