@@ -41,8 +41,8 @@ public class OrderApiController {
 
         Long orderId = orderService.order(memberId, productId, count);
 
-        String memberName = memberRepository.findByName(memberId);
-        Order order = orderRepository.findOne(orderId);
+        String memberName = memberRepository.findNameById(memberId);
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다. orderId = " + orderId));
 
         OrderResponseDto responseDto = new OrderResponseDto(memberName, order.getOrderDetails(), count, order.getStatus());
 
@@ -53,7 +53,7 @@ public class OrderApiController {
     @PostMapping("/cancel")
     public ResponseEntity cancelOrder(@RequestParam("orderId") Long orderId) {
         orderService.cancelOrder(orderId);
-        Order order = orderRepository.findOne(orderId);
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다. orderId = " + orderId));
 
         CancelResponseDto responseDto = new CancelResponseDto(order);
 

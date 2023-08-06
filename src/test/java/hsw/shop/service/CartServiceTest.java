@@ -9,6 +9,7 @@ import hsw.shop.web.dto.OrderDetailDto;
 import hsw.shop.web.dto.ProductCreateDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +44,8 @@ class CartServiceTest {
     @Autowired
     OrderService orderService;
 
-    public final String imageStore = "C:/Temp/hswshop/product_image/0d627400-0841-4062-8ac1-44120c928f4a.jpg";
+    @Value("${file.dir}/test.png")
+    private String imageStore;
 
     @Test
     public void 장바구니_상품담기() throws IOException {

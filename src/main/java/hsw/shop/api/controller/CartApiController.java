@@ -40,8 +40,8 @@ public class CartApiController {
                                    @RequestParam("count") int count) {
         cartService.put(memberId, productId, count);
 
-        String memberName = memberRepository.findByName(memberId);
-        String productName = productRepository.findByName(productId);
+        String memberName = memberRepository.findNameById(memberId);
+        String productName = productRepository.findNameById(productId);
 
         CartResponseDto responseDto = new CartResponseDto(memberName, productName, count);
 
@@ -52,8 +52,7 @@ public class CartApiController {
     @DeleteMapping("/cart-cancel")
     public ResponseEntity cartCancel(@RequestParam("cartId") Long cartId) {
         cartService.cancel(cartId);
-
-        Cart cart = cartRepository.findOne(cartId);
+        Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 장바구니 상품입니다. cartId = " + cartId));
 
         return new ResponseEntity<JsonResultDto>(new JsonResultDto("장바구니 상품 삭제!", cart), HttpStatus.OK);
     }
@@ -79,8 +78,8 @@ public class CartApiController {
 
         Long orderId = orderService.order(Long.parseLong(memberId.get()), carts);
 
-        String memberName = memberRepository.findByName(Long.parseLong(memberId.get()));
-        Order order = orderRepository.findOne(orderId);
+        String memberName = memberRepository.findNameById(Long.parseLong(memberId.get()));
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다. orderId = " + orderId));
 
         CartOrderResponseDto responseDto = new CartOrderResponseDto(memberName, order);
 

@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    @Query("select m from Member m where m.id = :id")
+    @Query("select m.name from Member m where m.id = :id")
     String findNameById(@Param("id") Long id);
 }
