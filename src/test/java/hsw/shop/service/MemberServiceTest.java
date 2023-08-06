@@ -1,6 +1,7 @@
 package hsw.shop.service;
 
 import hsw.shop.domain.Member;
+import hsw.shop.domain.MemberRole;
 import hsw.shop.web.dto.MemberCreateDto;
 import hsw.shop.web.dto.MemberSignInDto;
 import hsw.shop.web.dto.MemberUpdateDto;
@@ -111,6 +112,6 @@ class MemberServiceTest {
     }
 
     private MemberCreateDto createMember(String id, String password, String name, String phone, String email, String zipcode, String address1, String address2) {
-        return new MemberCreateDto(id, password, name, phone, email, zipcode, address1, address2);
+        return new MemberCreateDto(id, password, name, phone, email, zipcode, address1, address2, MemberRole.USER);
     }
 }

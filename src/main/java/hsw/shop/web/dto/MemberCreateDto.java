@@ -58,7 +58,7 @@ public class MemberCreateDto {
     public MemberCreateDto() {
     }
 
-    public MemberCreateDto(String id, String password, String passwordCheck, String name, String phone, String email, String zipcode, String address1, String address2) {
+    public MemberCreateDto(String id, String password, String passwordCheck, String name, String phone, String email, String zipcode, String address1, String address2, MemberRole role) {
         this.id = id;
         this.password = password;
         this.passwordCheck = passwordCheck;
@@ -68,6 +68,7 @@ public class MemberCreateDto {
         this.zipcode = zipcode;
         this.address1 = address1;
         this.address2 = address2;
+        this.role = role;
     }
 
     @Builder

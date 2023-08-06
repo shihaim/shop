@@ -107,7 +107,7 @@ class OrderServiceTest {
     }
 
     private Member createMember(String id, String password, String name, String phone, String email, String zipcode, String address1, String address2) {
-        return new MemberCreateDto(id, password, name, phone, email, zipcode, address1, address2).toEntity();
+        return new MemberCreateDto(id, password, name, phone, email, zipcode, address1, address2, MemberRole.USER).toEntity();
     }
 
     private Product createProduct(MockMultipartFile productImage, String name, int price, int stockQuantity, String description) {
