@@ -10,7 +10,6 @@ COPY hswshop/product_image/test.png $HOME$FILEPATH
 COPY ./hsw/shop /tmp
 WORKDIR /tmp
 
-RUN ./gradlew
 RUN ./gradlew build
 
 FROM openjdk:latest
