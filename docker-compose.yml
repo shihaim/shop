@@ -1,0 +1,27 @@
+services:
+  h2:
+    image: oscarfonts/h2
+    container_name: h2
+    ports: 
+      - "1521:1521"
+      - "8081:81"
+    volumes:
+      - /Users/Shared/data/h2-dev:/opt/h2-data
+    environment:
+      H2_OPTIONS: -ifNotExists
+    networks:
+      - network
+
+  shop:
+    image: shop # Warning log
+    container_name: shop
+    build:
+      context: ~/ # WORKDIR location
+      dockerfile: ./hsw/shop/Dockerfile # relative location to context
+    ports:
+      - 8080:8080
+    networks:
+      - network
+
+networks:
+  network:
